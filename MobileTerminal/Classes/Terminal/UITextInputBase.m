@@ -92,6 +92,11 @@
   return nil;
 }
 
+- (NSArray *)selectionRectsForRange:(UITextRange *)range
+{
+	return nil;
+}
+
 - (UITextWritingDirection)baseWritingDirectionForPosition:(UITextPosition *)position inDirection:(UITextStorageDirection)direction
 {
   return UITextWritingDirectionNatural;

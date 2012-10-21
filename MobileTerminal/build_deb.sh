@@ -1,4 +1,5 @@
 #!/bin/bash
+exit 0
 # This builds a .deb package for installing MobileTerminal using
 # Cydia as described here: http://www.saurik.com/id/7
 #

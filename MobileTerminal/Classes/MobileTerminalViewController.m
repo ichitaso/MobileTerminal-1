@@ -38,13 +38,13 @@
 - (void)registerForKeyboardNotifications
 {
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWasShown:)
-                                               name:UIKeyboardDidShowNotification
+                                           selector:@selector(keyboardWillShow:)
+                                               name:UIKeyboardWillShowNotification
                                              object:nil];
   
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWasHidden:)
-                                               name:UIKeyboardDidHideNotification
+                                           selector:@selector(keyboardWillHide:)
+                                               name:UIKeyboardWillHideNotification
                                              object:nil];
 }
 
@@ -62,42 +62,42 @@
 // below -- it requires more of a change because the replacement
 // is not available in 3.1.3
 
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardWillShow:(NSNotification*)aNotification
 {
   if (keyboardShown) {
     return;
   }
   keyboardShown = YES;
 
-  NSDictionary* info = [aNotification userInfo];
-  
-  // Get the size of the keyboard.
-  NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-  CGSize keyboardSize = [aValue CGRectValue].size;
-  
-  // Reset the height of the terminal to full screen not shown by the keyboard
-  CGRect viewFrame = [contentView frame];
-  viewFrame.size.height -= keyboardSize.height;
-  contentView.frame = viewFrame;
+	[UIView animateWithDuration:[[aNotification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[[aNotification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue] animations:^{
+		// Get the size of the keyboard.
+		NSValue* aValue = [aNotification.userInfo objectForKey:UIKeyboardBoundsUserInfoKey];
+		CGSize keyboardSize = [aValue CGRectValue].size;
+		
+		// Resize to the original height of the screen without the keyboard
+		CGRect viewFrame = contentView.frame;
+		viewFrame.size.height -= keyboardSize.height;
+		contentView.frame = viewFrame;
+	} completion:NULL];
 }
 
-- (void)keyboardWasHidden:(NSNotification*)aNotification
+- (void)keyboardWillHide:(NSNotification*)aNotification
 {
   if (!keyboardShown) {
     return;
   }
   keyboardShown = NO;
-
-  NSDictionary* info = [aNotification userInfo];
-  
-  // Get the size of the keyboard.
-  NSValue* aValue = [info objectForKey:UIKeyboardBoundsUserInfoKey];
-  CGSize keyboardSize = [aValue CGRectValue].size;  
-  
-  // Resize to the original height of the screen without the keyboard
-  CGRect viewFrame = [contentView frame];
-  viewFrame.size.height += keyboardSize.height;
-  contentView.frame = viewFrame;
+	
+	[UIView animateWithDuration:[[aNotification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue] delay:0 options:[[aNotification.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue] animations:^{
+		// Get the size of the keyboard.
+		NSValue* aValue = [aNotification.userInfo objectForKey:UIKeyboardBoundsUserInfoKey];
+		CGSize keyboardSize = [aValue CGRectValue].size;
+		
+		// Resize to the original height of the screen without the keyboard
+		CGRect viewFrame = contentView.frame;
+		viewFrame.size.height += keyboardSize.height;
+		contentView.frame = viewFrame;
+	} completion:NULL];
 }
 
 - (void)setShowKeyboard:(BOOL)showKeyboard

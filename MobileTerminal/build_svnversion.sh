@@ -1,4 +1,5 @@
 #!/bin/bash
+exit 0
 #
 # Writes the current SVN version to svnversion.h
 #
