@@ -22,7 +22,7 @@
 @property (nonatomic, retain) IBOutlet MobileTerminalViewController *terminalViewController;
 @property (nonatomic, retain) IBOutlet PreferencesViewController *preferencesViewController;
 
-- (void)preferencesButtonPressed;
+- (void)preferencesButtonPressed:(id)sender;
 - (void)rootViewDidAppear;
 
 @end

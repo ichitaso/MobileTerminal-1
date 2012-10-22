@@ -37,11 +37,17 @@
 
 static const NSTimeInterval kAnimationDuration = 1.00f;
 
-- (void)preferencesButtonPressed
+- (void)preferencesButtonPressed:(id)sender
 {
   inPreferences = TRUE;
-  [navigationController setNavigationBarHidden:NO];
-  [navigationController pushViewController:preferencesViewController animated:YES];
+	if (isPad) {
+		UINavigationController *preferencesNavigationController = [[UINavigationController alloc] initWithRootViewController:preferencesViewController];
+		UIPopoverController *preferencesPopover = [[UIPopoverController alloc] initWithContentViewController:preferencesNavigationController];
+		[preferencesPopover presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+	} else {
+		[navigationController setNavigationBarHidden:NO];
+		[navigationController pushViewController:preferencesViewController animated:YES];
+	}
 }
 
 - (void)rootViewDidAppear
@@ -52,7 +58,7 @@ static const NSTimeInterval kAnimationDuration = 1.00f;
   inPreferences = TRUE;
 
   // This must be invoked after the animation to show the root view completes
-  [navigationController setNavigationBarHidden:YES];  
+  //[navigationController setNavigationBarHidden:YES];
 }
 
 @end

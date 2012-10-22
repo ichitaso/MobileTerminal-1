@@ -128,7 +128,7 @@
 // Invoked when the page control is clicked to make a new terminal active.  The
 // keyboard events are forwarded to the new active terminal and it is made the
 // front-most terminal view.
-- (void)terminalSelectionDidChange:(id)sender 
+- (IBAction)terminalSelectionDidChange:(id)sender
 {
   TerminalView* terminalView =
       [terminalGroupView terminalAtIndex:[terminalSelector currentPage]];
@@ -143,9 +143,14 @@
   // Remember the keyboard state for the next reload and don't listen for
   // keyboard hide/show events
   shouldShowKeyboard = keyboardShown;
-  [self unregisterForKeyboardNotifications];
 
-  [interfaceDelegate preferencesButtonPressed];
+	if (isPad) {
+		[terminalKeyboard resignFirstResponder];
+	}
+	
+	[self unregisterForKeyboardNotifications];
+	
+	[interfaceDelegate preferencesButtonPressed:sender];
 }
 
 // Invoked when the menu button is pressed
@@ -200,11 +205,6 @@
   // later allow us to make it the first responder so we can show the keyboard
   // on the screen.
   [[self view] addSubview:terminalKeyboard];
-
-  // The menu button points to the right, but for this context it should point
-  // up, since the menu moves that way.
-  menuButton.transform = CGAffineTransformMakeRotation(-90.0f * M_PI / 180.0f);
-  [menuButton setNeedsLayout];  
   
   // Setup the page control that selects the active terminal
   [terminalSelector setNumberOfPages:[terminalGroupView terminalCount]];

@@ -34,6 +34,8 @@
   // TODO(allen): This currently does not handle control character conversion
   // like when you press the dot key on the keyboard.
   commandTextView.text = editingMenuItem.command;
+	
+	self.contentSizeForViewInPopover = CGSizeMake(320, 480);
 }
 
 - (void)cancelEditing:(id)sender

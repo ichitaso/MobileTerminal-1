@@ -6,7 +6,7 @@
 
 @interface PreferencesViewController : UITableViewController {
 @private
-  UINavigationController* navigationController;  
+  //UINavigationController* navigationController;
   UIViewController* menuSettingsController;
   UIViewController* gestureSettingsController;
   UIViewController* aboutController;
@@ -15,7 +15,7 @@
   NSMutableArray* controllers;
 }
 
-@property(nonatomic, retain) IBOutlet UINavigationController* navigationController;
+//@property(nonatomic, retain) IBOutlet UINavigationController* navigationController;
 @property(nonatomic, retain) IBOutlet UIViewController* menuSettingsController;
 @property(nonatomic, retain) IBOutlet UIViewController* gestureSettingsController;
 @property(nonatomic, retain) IBOutlet UIViewController* aboutController;

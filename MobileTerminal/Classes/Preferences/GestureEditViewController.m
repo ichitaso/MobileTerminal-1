@@ -41,7 +41,9 @@
       break;
     }
   }
-  [actionPicker selectRow:selectedRow inComponent:0 animated:NO];  
+  [actionPicker selectRow:selectedRow inComponent:0 animated:NO];
+	
+	self.contentSizeForViewInPopover = CGSizeMake(320, 480);
 }
 
 - (void)cancelEditing:(id)sender

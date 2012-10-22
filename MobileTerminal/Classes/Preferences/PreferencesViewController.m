@@ -6,7 +6,7 @@
 
 @implementation PreferencesViewController
 
-@synthesize navigationController;
+//@synthesize navigationController;
 @synthesize menuSettingsController;
 @synthesize gestureSettingsController;
 @synthesize aboutController;
@@ -24,7 +24,9 @@
   [sections addObject:@"About"];
   [controllers addObject:menuSettingsController];
   [controllers addObject:gestureSettingsController];
-  [controllers addObject:aboutController];      
+  [controllers addObject:aboutController];
+	self.title = @"Preferences";
+	self.contentSizeForViewInPopover = CGSizeMake(320, 480);
 }
 
 - (void)dealloc
@@ -64,7 +66,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSUInteger index = [indexPath indexAtPosition:1];  
-  UIViewController* itemController = [controllers objectAtIndex:index];
+	UIViewController* itemController = [controllers objectAtIndex:index];
+	itemController.contentSizeForViewInPopover = CGSizeMake(320, 480);
   [self.navigationController pushViewController:itemController animated:YES];
   itemController.navigationItem.title = [sections objectAtIndex:index];
 }
